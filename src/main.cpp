@@ -34,9 +34,9 @@ int main(int argc, char const *argv[]) {
         if(stat(argv[2], &info) != 0)
             exit(EXIT_FOLDER_NOT_ACCESSIBLE);
 #ifdef S_IFDIR
-        else if(info.st_mode & S_IFDIR)
+        else if((info.st_mode & S_IFDIR) || (info.st_mode & S_IFREG))
 #else
-        else if(info.st_mode & S_ISDIR)
+        else if((info.st_mode & S_ISDIR) || (info.st_mode & S_ISREG))
 #endif
             command = new IOD::Commands::IndexCommand(argv[2]);
         else

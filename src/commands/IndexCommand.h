@@ -1,8 +1,10 @@
 #pragma once
 
 #include <string>
-
+#include <filesystem>
 #include "ICommand.h"
+
+namespace fs = std::filesystem;
 
 namespace IOD
 {
@@ -16,6 +18,8 @@ namespace IOD
 
         private:
             std::string folderPath;
+
+            bool isSupported(const fs::path& file);
         };
 
     } // namespace Commands
