@@ -18,7 +18,8 @@ namespace IOD
 
         // tokenises the file, fills tokens in tokenList and returns number of tokens created
         size_t tokenise();
-        long getId() { return this->id; }
+        long getId() const { return this->id; }
+        fs::path getPath() const { return this->filePath; }
         const std::vector<Tokenisation::Token>& getTokens();
 
     private:

@@ -19,7 +19,7 @@ namespace IOD
             Tokeniser(fs::path file) : filePath(file) {}
 
             std::vector<Token> tokenise();
-            std::vector<Token> tokenise(const std::string& content);
+            std::vector<Token> tokenise(std::string_view content);
 
         private:
             fs::path filePath;

@@ -20,6 +20,7 @@ set(SRC_FILES
     src/commands/SearchCommand.cpp
     src/Document.cpp
     src/Tokeniser.cpp
+    src/InvertedIndex.cpp
 )
 
 add_executable(iod ${SRC_FILES})

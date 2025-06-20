@@ -14,15 +14,18 @@ namespace IOD
     namespace Tokenisation
     {
         std::vector<Token> Tokeniser::tokenise() {
-            std::ifstream file(filePath, std::ifstream::in);
-            std::ostringstream oss;
-            oss << file.rdbuf();
-            std::string content = oss.str();
+            std::ifstream file(filePath, std::ios::binary | std::ios::ate);
 
-            return this->tokenise(content);
+            const std::streamsize size = file.tellg();
+            file.seekg(0, std::ios::beg);
+
+            std::string content(size, '\0');
+            file.read(content.data(), size);
+
+            return tokenise(content);
         }
 
-        std::vector<Token> Tokeniser::tokenise(const std::string& content) {
+        std::vector<Token> Tokeniser::tokenise(std::string_view content) {
 
             std::vector<Token> retVal;
 
