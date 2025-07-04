@@ -2,6 +2,7 @@
 #include "SearchCommand.h"
 #include "InvertedIndex.h"
 #include "Tokeniser.h"
+#include "NoRanking.h"
 
 namespace IOD
 {
@@ -21,7 +22,15 @@ namespace IOD
             // tokenise queryString
             Tokenisation::Tokeniser tokeniser;
             std::vector<Tokenisation::Token> qToks = tokeniser.tokenise(queryString);
-            std::cout << queryString << std::endl;
+
+            IRankingStrategy *ranker = new Ranking::NoRanking(index);
+            std::vector<Hit> searchRes = ranker->query(qToks);
+
+            for(const Hit& hit: searchRes) {
+                std::cout <<    index.getDocById(hit.docId).docPath.string()    << "\t\t\t" << \
+                                "at = " << hit.pos                              << "\t\t\t" << \
+                                "score = " << hit.score                         <<std::endl;
+            }
         }
     } // namespace Commands
 } // namespace IOD

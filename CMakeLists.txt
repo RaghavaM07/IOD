@@ -12,10 +12,12 @@ if("${CMAKE_SOURCE_DIR}" STREQUAL "${CMAKE_BINARY_DIR}")
 endif()
 
 include_directories(${PROJECT_SOURCE_DIR}/include)
+include_directories(${PROJECT_SOURCE_DIR}/src/ranking)
 include_directories(${PROJECT_SOURCE_DIR}/src/commands)
 
 set(SRC_FILES
     src/main.cpp
+    src/ranking/NoRanking.cpp
     src/commands/IndexCommand.cpp
     src/commands/SearchCommand.cpp
     src/Document.cpp
