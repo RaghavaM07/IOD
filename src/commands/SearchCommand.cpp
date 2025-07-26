@@ -2,7 +2,7 @@
 #include "SearchCommand.h"
 #include "InvertedIndex.h"
 #include "Tokeniser.h"
-#include "NoRanking.h"
+#include "TfIdfRanking.h"
 
 namespace IOD
 {
@@ -23,7 +23,7 @@ namespace IOD
             Tokenisation::Tokeniser tokeniser;
             std::vector<Tokenisation::Token> qToks = tokeniser.tokenise(queryString);
 
-            IRankingStrategy *ranker = new Ranking::NoRanking(index);
+            IRankingStrategy *ranker = new Ranking::TfIdfRanking(index);
             std::vector<Hit> searchRes = ranker->query(qToks);
 
             for(const Hit& hit: searchRes) {

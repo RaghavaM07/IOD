@@ -18,6 +18,7 @@ include_directories(${PROJECT_SOURCE_DIR}/src/commands)
 set(SRC_FILES
     src/main.cpp
     src/ranking/NoRanking.cpp
+    src/ranking/TfIdfRanking.cpp
     src/commands/IndexCommand.cpp
     src/commands/SearchCommand.cpp
     src/Document.cpp

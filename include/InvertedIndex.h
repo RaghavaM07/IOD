@@ -31,18 +31,27 @@ namespace IOD
             void serialise(std::string outFileName);
             static InvertedIndex deserialise(std::string inFileName);
 
+            // Number of docs in index
             size_t totalDocs()         const { return documentSet.size(); }
+
+            // Number of tokens in `docId`
             size_t docLength(long id)  const { return documentSet.at(id).tokCount; }
+
+            // Number of docs with `term`
             size_t docFreq(const std::string& term) const {
                 auto it = invIndex.find(term);
                 return it==invIndex.end()? 0 : it->second.size();
             }
+
+            // Number of occurences of `term` in `docId`
             size_t termFreq(long docId, const std::string& term) const {
                 auto pit = invIndex.find(term);
                 if(pit==invIndex.end()) return 0;
                 auto dit = pit->second.find(docId);
                 return dit==pit->second.end() ? 0 : dit->second.size();
             }
+
+            // Average number of tokens per doc
             double avgDocLength() const {
                 double sum=0;
                 for(auto& [id,info]: documentSet) sum += info.tokCount;
