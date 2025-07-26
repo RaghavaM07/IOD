@@ -11,6 +11,8 @@ namespace IOD
             std::vector<Hit> found;
 
             for(const Tokenisation::Token& tok: queryTok) {
+                if(index.getIndex().find(tok.value) == index.getIndex().end()) continue;
+
                 SerDe::Posting posting = index.getIndex().at(tok.value);
 
                 double idfVal = idf(tok.value);

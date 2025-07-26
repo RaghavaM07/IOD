@@ -21,6 +21,7 @@ set(SRC_FILES
     src/ranking/TfIdfRanking.cpp
     src/commands/IndexCommand.cpp
     src/commands/SearchCommand.cpp
+    src/commands/InteractiveSearchCommand.cpp
     src/Document.cpp
     src/Tokeniser.cpp
     src/InvertedIndex.cpp

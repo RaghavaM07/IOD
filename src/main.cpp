@@ -8,11 +8,12 @@
 #include "ICommand.h"
 #include "IndexCommand.h"
 #include "SearchCommand.h"
+#include "InteractiveSearchCommand.h"
 
 void printUsage(const char* progName) {
     std::cerr << "Usage: " << progName << " [";
     std::cerr << "index <folder path> | ";
-    std::cerr << "search <index file> <search string> | ";
+    std::cerr << "search <index file> [search string] | ";
     std::cerr << "help]" << std::endl;
 }
 
@@ -43,7 +44,8 @@ int main(int argc, char const *argv[]) {
             exit(EXIT_NOT_A_FOLDER);
     }
     else if(cmdStr == "search" && argc == 3) {
-        /* TODO: interactive search */
+        const char *indexFile = argv[2];
+        command = new IOD::Commands::InteractiveSearchCommand(indexFile);
     }
     else if(cmdStr == "search" && argc > 3) {
         const char *indexFile = argv[2];
