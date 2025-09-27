@@ -25,6 +25,7 @@ set(SRC_FILES
     src/Document.cpp
     src/Tokeniser.cpp
     src/InvertedIndex.cpp
+    src/PluginLoader/PluginLoader.cpp
 )
 
 add_executable(iod ${SRC_FILES})
