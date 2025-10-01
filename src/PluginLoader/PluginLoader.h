@@ -6,6 +6,8 @@
 #include <dlfcn.h>
 #include <cstring>
 
+#include "IRankingStrategy.h"
+
 template <class T>
 using PluginInit_t = T* (*)();
 
@@ -21,9 +23,18 @@ private:
     fs::path pluginsPath;
     std::string id;
 
-public:
-    PluginLoader(const std::string& pluginsPath, const std::string& id);
-    ~PluginLoader();
+    static PluginLoader<T> *INSTANCE;
 
+    PluginLoader();
+
+public:
+    size_t init(const std::string &pluginsPath, const std::string &id);
+    static PluginLoader<T> *instance();
     T* makePlugin(std::string name);
+    ~PluginLoader();
 };
+
+template <class T>
+PluginLoader<T>* PluginLoader<T>::INSTANCE = nullptr;
+
+template class PluginLoader<IOD::IRankingStrategy>;

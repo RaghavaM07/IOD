@@ -1,7 +1,10 @@
 #include "PluginLoader.h"
 
 template <class T>
-PluginLoader<T>::PluginLoader(const std::string& sPluginsPath, const std::string& id) {
+PluginLoader<T>::PluginLoader() { }
+
+template <class T>
+size_t PluginLoader<T>::init(const std::string& sPluginsPath, const std::string& id) {
     this->id = std::string(id);
 
     if(!fs::exists(sPluginsPath) || !fs::exists(sPluginsPath) || !fs::is_directory(sPluginsPath))
@@ -25,17 +28,29 @@ PluginLoader<T>::PluginLoader(const std::string& sPluginsPath, const std::string
                 continue;
             }
 
-            PluginInit_t<T> createFn = dlsym(handle, "create_instance");
+            PluginInit_t<T> createFn = (PluginInit_t<T>) dlsym(handle, "create_instance");
             if(!createFn)
                 continue;
 
             initMap[std::string(idFn())] = createFn;
         }
     }
+
+    return initMap.size();
 }
 
 template <class T>
-PluginLoader<T>::~PluginLoader() {}
+PluginLoader<T>::~PluginLoader() {
+    delete INSTANCE;
+}
+
+template <class T>
+PluginLoader<T>* PluginLoader<T>::instance() {
+    if(INSTANCE == nullptr) {
+        return INSTANCE = new PluginLoader<T>();
+    }
+    return INSTANCE;
+}
 
 template <class T>
 T* PluginLoader<T>::makePlugin(std::string name) {

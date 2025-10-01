@@ -5,10 +5,14 @@
 #include <sys/stat.h>
 
 #include "ExitCodes.h"
+
 #include "ICommand.h"
 #include "IndexCommand.h"
 #include "SearchCommand.h"
 #include "InteractiveSearchCommand.h"
+
+#include "IRankingStrategy.h"
+#include "PluginLoader.h"
 
 void printUsage(const char* progName) {
     std::cerr << "Usage: " << progName << " [";
@@ -28,6 +32,9 @@ int main(int argc, char const *argv[]) {
     transform(cmdStr.begin(), cmdStr.end(), cmdStr.begin(), ::tolower);
 
     IOD::ICommand* command = NULL;
+
+    PluginLoader<IOD::IRankingStrategy> *rankerLoader = PluginLoader<IOD::IRankingStrategy>::instance();
+    rankerLoader->init(std::string("."), std::string("RANKER"));
 
     if(cmdStr == "index" && argc == 3) {
         // verify folder exists and is accessible
