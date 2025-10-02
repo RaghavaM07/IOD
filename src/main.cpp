@@ -34,7 +34,7 @@ int main(int argc, char const *argv[]) {
     IOD::ICommand* command = NULL;
 
     PluginLoader<IOD::IRankingStrategy> *rankerLoader = PluginLoader<IOD::IRankingStrategy>::instance();
-    rankerLoader->init(std::string("."), std::string("RANKER"));
+    std::cout << rankerLoader->init({std::string("."), std::string(".")}, std::string("RANKER")) << std::endl;
 
     if(cmdStr == "index" && argc == 3) {
         // verify folder exists and is accessible

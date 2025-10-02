@@ -5,6 +5,7 @@
 #include <filesystem>
 #include <dlfcn.h>
 #include <cstring>
+#include <unordered_set>
 
 #include "IRankingStrategy.h"
 
@@ -20,7 +21,7 @@ class PluginLoader
 {
 private:
     std::unordered_map<std::string, PluginInit_t<T>> initMap;
-    fs::path pluginsPath;
+    std::unordered_set<fs::path> pluginsPath;
     std::string id;
 
     static PluginLoader<T> *INSTANCE;
@@ -28,7 +29,7 @@ private:
     PluginLoader();
 
 public:
-    size_t init(const std::string &pluginsPath, const std::string &id);
+    size_t init(const std::vector<std::string> &pluginPaths, const std::string &id);
     static PluginLoader<T> *instance();
     T* makePlugin(std::string name);
     ~PluginLoader();
