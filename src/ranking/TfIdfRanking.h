@@ -13,12 +13,17 @@ namespace IOD
             SerDe::InvertedIndex index;
         
         public:
-            TfIdfRanking(SerDe::InvertedIndex index): index(index) {}
+            // TfIdfRanking(SerDe::InvertedIndex index): index(index) {}
+            TfIdfRanking() {}
 
             std::vector<Hit> query(std::vector<Tokenisation::Token>& queryTokens);
 
             std::string name() {
                 return "Tf-Idf";
+            }
+
+            void setIndex(SerDe::InvertedIndex index) {
+                this->index = index;
             }
 
             // tf(t, d) = freq_of_t_in_d/terms_in_d

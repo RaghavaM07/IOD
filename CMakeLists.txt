@@ -18,8 +18,8 @@ include_directories(${PROJECT_SOURCE_DIR}/src/PluginLoader)
 
 set(SRC_FILES
     src/main.cpp
-    src/ranking/NoRanking.cpp
-    src/ranking/TfIdfRanking.cpp
+    # src/ranking/NoRanking.cpp
+    # src/ranking/TfIdfRanking.cpp
     src/commands/IndexCommand.cpp
     src/commands/SearchCommand.cpp
     src/commands/InteractiveSearchCommand.cpp
@@ -28,6 +28,15 @@ set(SRC_FILES
     src/InvertedIndex.cpp
     src/PluginLoader/PluginLoader.cpp
 )
+
+file(GLOB RANKER_SOURCES src/ranking/*.cpp)
+
+foreach(source ${RANKER_SOURCES})
+    get_filename_component(name ${source} NAME_WE)
+    add_library(${name} SHARED ${source})
+    target_include_directories(${name} PRIVATE include)
+    set_target_properties(${name} PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/plugins)
+endforeach()
 
 add_executable(iod ${SRC_FILES})
 

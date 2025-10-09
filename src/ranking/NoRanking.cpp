@@ -24,6 +24,15 @@ namespace IOD
 
             return retVal;
         }
+
+        // Factory functions
+        extern "C" const char* plugin_interface_id() {
+            return "RANKER";
+        }
+
+        extern "C" IRankingStrategy* create_instance() {
+            return new NoRanking();
+        }
     } // namespace Ranking
 } // namespace IOD
 

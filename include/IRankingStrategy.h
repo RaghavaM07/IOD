@@ -2,6 +2,7 @@
 
 #include <vector>
 #include "Token.h"
+#include "InvertedIndex.h"
 
 namespace IOD
 {
@@ -16,6 +17,8 @@ namespace IOD
         virtual std::vector<Hit> query(std::vector<Tokenisation::Token>& queryTokens) = 0;
 
         virtual std::string name() = 0;
+
+        virtual void setIndex(IOD::SerDe::InvertedIndex index) = 0;
     };
 
     namespace Ranking

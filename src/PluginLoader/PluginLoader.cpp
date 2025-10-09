@@ -26,7 +26,7 @@ namespace IOD
                 std::error_code err;
                 if(!file.is_regular_file(err)) continue;
                 if(file.path().extension() == ".so") {
-                    // match with corresponding id
+                    // open & match with corresponding id
                     void *handle = dlopen(file.path().c_str(), RTLD_NOW);
                     if(!handle)
                         continue;
@@ -41,7 +41,7 @@ namespace IOD
                     if(!createFn)
                         continue;
 
-                    initMap[std::string(idFn())] = createFn;
+                    initMap[std::string(createFn()->name())] = createFn;
                 }
             }
         }
@@ -63,9 +63,9 @@ namespace IOD
 
     template <class T>
     T* PluginLoader<T>::makePlugin(std::string name) {
-    if(initMap.find(name) == initMap.end())
-        return nullptr;
+        if(initMap.find(name) == initMap.end())
+            return nullptr;
 
-    return initMap[name]();
-}
+        return initMap[name]();
+    }
 }

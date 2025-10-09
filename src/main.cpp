@@ -34,7 +34,7 @@ int main(int argc, char const *argv[]) {
     IOD::ICommand* command = NULL;
 
     IOD::PluginLoader<IOD::IRankingStrategy> *rankerLoader = IOD::PluginLoader<IOD::IRankingStrategy>::instance();
-    rankerLoader->init({std::string("."), std::string(".")}, std::string("RANKER"));
+    rankerLoader->init({std::string("./plugins")}, std::string("RANKER"));
 
     // Index Command
     if(cmdStr == "index" && argc == 3) {
