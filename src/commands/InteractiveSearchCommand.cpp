@@ -2,7 +2,7 @@
 #include "InteractiveSearchCommand.h"
 #include "InvertedIndex.h"
 #include "Tokeniser.h"
-#include "TfIdfRanking.h"
+#include "PluginLoader.h"
 
 namespace IOD
 {
@@ -21,7 +21,8 @@ namespace IOD
             int queryCount = 0;
             
             Tokenisation::Tokeniser tokeniser;
-            IRankingStrategy *ranker = new Ranking::TfIdfRanking(index);
+            IRankingStrategy *ranker = PluginLoader<IOD::IRankingStrategy>::instance()->makePlugin("Tf-Idf");
+            ranker->setIndex(index);
 
             while(true) {
                 std::string queryStr;

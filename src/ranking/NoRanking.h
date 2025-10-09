@@ -12,12 +12,17 @@ namespace IOD
             SerDe::InvertedIndex index;
 
         public:
-            NoRanking(SerDe::InvertedIndex index): index(index) {}
+            NoRanking() {}
+            // NoRanking(SerDe::InvertedIndex index): index(index) {}
 
             std::vector<Hit> query(std::vector<Tokenisation::Token>& queryTokens);
 
             std::string name() {
                 return "No-Op";
+            }
+
+            void setIndex(SerDe::InvertedIndex index) {
+                this->index = index;
             }
         };
     } // namespace Ranking    

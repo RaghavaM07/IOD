@@ -5,10 +5,14 @@
 #include <sys/stat.h>
 
 #include "ExitCodes.h"
+
 #include "ICommand.h"
 #include "IndexCommand.h"
 #include "SearchCommand.h"
 #include "InteractiveSearchCommand.h"
+
+#include "IRankingStrategy.h"
+#include "PluginLoader.h"
 
 void printUsage(const char* progName) {
     std::cerr << "Usage: " << progName << " [";
@@ -29,6 +33,10 @@ int main(int argc, char const *argv[]) {
 
     IOD::ICommand* command = NULL;
 
+    IOD::PluginLoader<IOD::IRankingStrategy> *rankerLoader = IOD::PluginLoader<IOD::IRankingStrategy>::instance();
+    rankerLoader->init({std::string("./plugins")}, std::string("RANKER"));
+
+    // Index Command
     if(cmdStr == "index" && argc == 3) {
         // verify folder exists and is accessible
         struct stat info;
@@ -43,10 +51,12 @@ int main(int argc, char const *argv[]) {
         else
             exit(EXIT_NOT_A_FOLDER);
     }
+    // Interactive search
     else if(cmdStr == "search" && argc == 3) {
         const char *indexFile = argv[2];
         command = new IOD::Commands::InteractiveSearchCommand(indexFile);
     }
+    // Single search
     else if(cmdStr == "search" && argc > 3) {
         const char *indexFile = argv[2];
         std::string queryString = "";
@@ -56,10 +66,12 @@ int main(int argc, char const *argv[]) {
         }
         command = new IOD::Commands::SearchCommand(indexFile, queryString);
     }
+    // Help
     else if(cmdStr == "help") {
         printUsage(argv[0]);
         exit(EXIT_SUCCESS);
     }
+    // Invalid
     else {
         printUsage(argv[0]);
         exit(EXIT_WRONG_USAGE);

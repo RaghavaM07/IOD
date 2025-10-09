@@ -31,6 +31,15 @@ namespace IOD
             std::sort(found.begin(), found.end(), IOD::Ranking::stdScoreComparator);
             return found;
         }
+
+        // Factory functions
+        extern "C" const char* plugin_interface_id() {
+            return "RANKER";
+        }
+
+        extern "C" IRankingStrategy* create_instance() {
+            return new TfIdfRanking();
+        }
     } // namespace Ranking
 } // namespace IOD
 
