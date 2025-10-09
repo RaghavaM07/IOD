@@ -1,9 +1,12 @@
 # Indexer On Demand (IOD)
 A simple command-line utility that builds index files that can later be used to query for individual tokens. Works on both individual files and files in a folder.
 
+> **October 09, 2025** <br>
+> Now supports plugin-based selection of ranking algorithms. Plugins are written as `.so` shared libraries that implement the `IRankingStrategy` interface and expose `const char* plugin_interface_id()` and `IRankingStrategy* create_instance()` factory functions.
+
 **NOTE** 
 <br>
-Curently supports only text-based files with `.txt` extension. WIP to add extensibility in parsing and other areas.
+Currently supports only text-based files with `.txt` extension. Can use the `PluginLoader` class to extend functionality for other file formats.
 
 ## Build steps
 This is a CMake project. <br>
@@ -26,7 +29,7 @@ cmake ..
 ```bash
 make
 ```
-5. Now you have your `iod` binary in the `build/` folder.
+5. Now you have your `iod` binary in the `build/` folder. Optionally, move the binary and the `plugins/` folder to a directory in `$PATH` for universal access.
 
 ## Usage
 Run the binary with `help` argument to get a simple usage guide.
